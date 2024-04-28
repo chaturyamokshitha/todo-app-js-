@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="output.css">
+</head>
+
+<body class="flex items-center justify-center bg-pink-700">
+    <div class="flex flex-col items-center p-4 mt-40 bg-white rounded-lg max-w-80">
+        <h1 class="mb-4 text-2xl font-bold">To-Do List 📓</h1>
+        <div class="flex">
+            <input type="text" placeholder="Enter your task"
+                class="flex-grow p-1 text-center bg-gray-200 border-none outline-none rounded-l-md" id="inputbox">
+            <button class="px-4 py-2 italic font-bold text-white bg-pink-500 rounded-r-md" onclick="add()">Add</button>
+        </div>
+        <div>
+            <ul class="mt-4" id="list-container">
+            </ul>
+        </div>
+    </div>
+    <script>
+        const inputbox = document.getElementById("inputbox");
+        const listbox = document.getElementById("list-container");
+
+        function add() {
+            if (inputbox.value === '')
+                alert('you must write something');
+            else {
+                let li = document.createElement('li');
+                li.innerHTML = `<span class="check">⭕</span> <span class="task-text">${inputbox.value}</span> <span class="delete">🗑️</span>`;
+                listbox.appendChild(li);
+                inputbox.value = '';
+                savedata();
+            }
+        }
+
+        listbox.addEventListener("click", function (e) {
+            const target = e.target;
+            if (target.classList.contains("check")) {
+                
+                target.textContent = target.textContent === "⭕" ? "✅" : "⭕";
+                target.classList.toggle("checked");
+               
+           
+                savedata();
+            } else if (target.classList.contains("delete")) {
+               
+                let task = target.parentNode;
+                task.remove();
+                savedata();
+            }
+        });
+
+        function savedata() {
+            localStorage.setItem("data", listbox.innerHTML);
+        }
+
+        function showtask() {
+            listbox.innerHTML = localStorage.getItem("data") || "";
+        }
+        showtask();
+    </script>
+</body>
+
+</html>

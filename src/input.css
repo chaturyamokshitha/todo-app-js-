@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.completed {
+    text-decoration: line-through;
+}
+.delete {
+      cursor: pointer;
+     
+      margin-left: 8px;
+    
+  }
